@@ -25,9 +25,7 @@ GLint encode(GLfloat x, GLfloat y) {
 }
 
 void pointChange() {
-    /*temp location (x,y) and (x0,y0)*/
     GLfloat x=0, y=0, x0, y0;
-    /*if k is 0 or 1 / k is 0*/
     if (line.x1 == line.x2) line.x1++;
     if (line.y1 == line.y2) line.y1++;
 
@@ -36,14 +34,14 @@ void pointChange() {
     line.y1_init = line.y1;
     line.y2_init = line.y2;
 
-    /*the code of the two terminal points*/
+    /*两个端点的编码*/
     GLint code1, code2;
     code1 = encode(line.x1, line.y1);
     code2 = encode(line.x2, line.y2);
-    /*temp code*/
+
     GLint code;
 
-    /*if the line is not all in the area*/
+    /*直线不完全在裁剪窗口中中*/
     while (code1 != 0 || code2 != 0) {
         if (code1 & code2) {
             line.x1 = 0;
@@ -52,34 +50,33 @@ void pointChange() {
             line.y2 = 0;
             break;
          }
-         /*set code value of code1 and code 2 one by one*/
+
          if (code1 != 0)  code = code1;
          else code = code2;
          y0 = line.y1;
          x0 = line.x1;
 
-         /*if the line is at left side of the rectangular area*/
+         /*部分直线在裁剪窗口左边*/
          if (code & left) {
              x = xleft;
-             /*using equation to caculate y*/
              y = y0 - (x0 - x) * (line.y1 - line.y2) / (line.x1 - line.x2);
          }
-         /*checking right after updating data*/
+         /*部分直线在裁剪窗口右边*/
          else if (code & right) {
              x = xright;
              y = y0 - (x0 - x) * (line.y1 - line.y2) / (line.x1 - line.x2);
          }
-         /*checking bottom after updating data*/
+         /*在裁剪窗口的下面*/
          else if (code & bottom) {
              y = ybottom;
              x = x0 - (y0 - y) * (line.x1 - line.x2) / (line.y1 - line.y2);
          }
-         /*checking top after updating data*/
+         /*在裁剪窗口的上面*/
          else if (code & top) {
             y = ytop;
             x = x0 - (y0 - y) * (line.x1 - line.x2) / (line.y1 - line.y2);
          }
-         /*updating the data*/
+         /*更新数据*/
          if (code == code1) {
             line.x1 = x;
             line.y1 = y;

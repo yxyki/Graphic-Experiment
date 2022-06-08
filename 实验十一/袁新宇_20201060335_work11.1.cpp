@@ -26,7 +26,6 @@ void displayWirePolyhedra(float x, float y, float z, float thera) {
 }
 
 void display() {
-
 	displayWirePolyhedra(x, y, z, thera);
 }
 
