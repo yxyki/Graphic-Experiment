@@ -3,7 +3,7 @@
 GLsizei winWidth = 500, winHeight = 500;
 
 void init(void) {
-	glClearColor(1.0, 1.0, 1.0, 0.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
 void wireQuadSurfs(void) {
